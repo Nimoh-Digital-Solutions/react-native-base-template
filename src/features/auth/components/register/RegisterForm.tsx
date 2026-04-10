@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Controller, type Control, type FieldErrors } from 'react-hook-form';
-import { User, Mail, Lock, AtSign } from 'lucide-react-native';
+import { User, Mail, Lock, AtSign, Check } from 'lucide-react-native';
 
 import type { RegisterBaseInput } from '@shared/schemas/auth.schema';
 import { PasswordStrengthIndicator } from '../PasswordStrengthIndicator';
@@ -48,6 +48,7 @@ export function RegisterForm({
 }: RegisterFormProps) {
   const { t } = useTranslation();
   const c = useColors();
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   return (
     <>
@@ -197,10 +198,24 @@ export function RegisterForm({
         )}
       />
 
+      <Pressable
+        style={s.termsRow}
+        onPress={() => setTermsAccepted(!termsAccepted)}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: termsAccepted }}
+      >
+        <View style={[s.checkbox, { borderColor: termsAccepted ? c.brand.deep : c.border.default, backgroundColor: termsAccepted ? c.brand.deep : 'transparent' }]}>
+          {termsAccepted && <Check size={14} color="#fff" />}
+        </View>
+        <Text style={[s.termsText, { color: c.text.secondary }]}>
+          {t('auth.register.acceptTerms', { defaultValue: 'I agree to the Privacy Policy and Terms of Service' })}
+        </Text>
+      </Pressable>
+
       <AuthButton
         label={isRegisterPending ? t('common.loading') : t('auth.register.createAccount')}
         onPress={onSubmit}
-        disabled={!isOnline || isRegisterPending}
+        disabled={!isOnline || isRegisterPending || !termsAccepted}
         loading={isRegisterPending}
       />
 
@@ -215,6 +230,23 @@ const s = StyleSheet.create({
   nameRow: { flexDirection: 'row', gap: spacing.sm },
   halfField: { flex: 1 },
   strengthWrap: { marginTop: -spacing.sm, marginBottom: spacing.xs },
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+    paddingVertical: spacing.xs,
+  },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 4,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 1,
+  },
+  termsText: { flex: 1, ...typography.small, lineHeight: 18 },
   offlineHint: {
     color: colors.status.error,
     ...typography.small,

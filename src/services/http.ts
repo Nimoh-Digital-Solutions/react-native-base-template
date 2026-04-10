@@ -178,7 +178,9 @@ http.interceptors.response.use(
       processQueue(refreshError, null);
       captureException(refreshError, { context: '401_refresh_failure' });
       addBreadcrumb('auth', 'Token refresh failed — logging out');
-      tokenStorage.clearAll();
+
+      const { useAuthStore } = await import('@/features/auth/stores/authStore');
+      useAuthStore.getState().logout();
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

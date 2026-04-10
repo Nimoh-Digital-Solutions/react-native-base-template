@@ -35,6 +35,8 @@ export const authApi = {
         last_name: input.last_name || '',
         password: input.password,
         password_confirm: input.password,
+        privacy_policy_accepted: true,
+        terms_of_service_accepted: true,
         ...(input.role !== undefined ? { role: input.role } : {}),
       },
       { headers: mobileHeaders },

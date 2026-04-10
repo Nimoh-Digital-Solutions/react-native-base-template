@@ -7,6 +7,7 @@ export const linking: LinkingOptions<RootStackParams> = {
     screens: {
       Auth: {
         screens: {
+          Welcome: 'welcome',
           Login: 'login',
           Register: 'register',
           ForgotPassword: 'forgot-password',
