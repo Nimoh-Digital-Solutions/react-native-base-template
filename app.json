@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "{{PROJECT_NAME}}",
+    "slug": "{{PROJECT_SLUG}}",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "{{PROJECT_SLUG}}",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "{{BUNDLE_ID}}",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs camera access for profile photos.",
+        "NSMicrophoneUsageDescription": "This app needs microphone access for audio features.",
+        "NSFaceIDUsageDescription": "Use Face ID to sign in quickly.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1d1532"
+      },
+      "softwareKeyboardLayoutMode": "resize",
+      "package": "{{BUNDLE_ID}}",
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
+    },
+    "updates": {
+      "url": "https://u.expo.dev/{{EAS_PROJECT_ID}}"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#1a365d"
+        }
+      ],
+      "expo-local-authentication",
+      "expo-web-browser",
+      "@sentry/react-native",
+      "expo-updates"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "{{EAS_PROJECT_ID}}"
+      }
+    }
+  }
+}
